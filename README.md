@@ -1,1 +1,417 @@
-# For-your-special-day
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <!-- Elegant Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-blue: #3282B8;
+            --light-blue: #BBE1FA;
+            --deep-blue: #0F4C75;
+            --dark-bg: #1B262C;
+            --text-glow: 0 0 10px rgba(50, 130, 184, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(-45deg, var(--dark-bg), var(--deep-blue), #1a364d, var(--dark-bg));
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Particle Container */
+        #particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            opacity: 0;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(187, 225, 250, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            z-index: 10;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInCard 2s ease-out 1s forwards;
+            position: relative;
+        }
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Top Lotus Decoration */
+        .lotus-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 20px auto;
+            opacity: 0.8;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { filter: drop-shadow(0 0 5px var(--primary-blue)); }
+            to { filter: drop-shadow(0 0 15px var(--light-blue)); }
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            color: var(--light-blue);
+            margin-bottom: 20px;
+            text-shadow: var(--text-glow);
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+
+        /* Letter Container */
+        .letter-container {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #e0f0ff;
+            text-align: left;
+            min-height: 250px;
+            margin-top: 10px;
+        }
+
+        .line {
+            display: block;
+            min-height: 1.8rem;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--light-blue);
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+            margin-left: 3px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Final Message */
+        .final-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            color: var(--light-blue);
+            text-shadow: 0 0 20px var(--primary-blue), 0 0 40px var(--light-blue);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 20;
+            white-space: nowrap;
+            transition: all 2s ease-out;
+        }
+
+        .final-message.show {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Music Prompt Overlay */
+        #music-prompt {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: var(--light-blue);
+            opacity: 0.6;
+            letter-spacing: 1px;
+            z-index: 100;
+            cursor: pointer;
+            animation: pulsePrompt 2s infinite;
+            pointer-events: none; /* Let clicks pass through to document */
+        }
+
+        @keyframes pulsePrompt {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2.5rem; }
+            .letter-container { font-size: 1.1rem; }
+            .card { padding: 30px 20px; }
+            .final-message { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Soft ambient piano music -->
+    <audio id="bg-music" loop muted playsinline>
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=piano-moment-9835.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="music-prompt">Tap anywhere for music ♫</div>
+
+    <div id="particles"></div>
+
+    <div class="card" id="main-card">
+        <!-- SVG Lotus Top Decoration -->
+        <svg class="lotus-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 85 C 20 85, 10 50, 50 15 C 90 50, 80 85, 50 85 Z" fill="#3282B8" opacity="0.3"/>
+            <path d="M50 85 C 30 75, 25 45, 50 25 C 75 45, 70 75, 50 85 Z" fill="#BBE1FA" opacity="0.6"/>
+            <path d="M50 85 C 40 70, 35 50, 50 35 C 65 50, 60 70, 50 85 Z" fill="#ffffff" opacity="0.8"/>
+            <path d="M50 85 C 10 70, 0 40, 20 30 C 35 45, 45 60, 50 85 Z" fill="#3282B8" opacity="0.4"/>
+            <path d="M50 85 C 90 70, 100 40, 80 30 C 65 45, 55 60, 50 85 Z" fill="#3282B8" opacity="0.4"/>
+        </svg>
+
+        <h1 id="title">For You...</h1>
+        
+        <div class="letter-container" id="letter">
+            <!-- Lines will be injected here by JS -->
+        </div>
+    </div>
+
+    <div class="final-message" id="final-msg">Happy Birthday</div>
+
+    <script>
+        // Content of the birthday letter
+        const letterLines = [
+            "In a sea of endless colors,",
+            "you are my favorite shade of blue.",
+            "Your elegance is like a lotus blooming in still waters—",
+            "beautiful, serene, and absolutely captivating.",
+            "I wish you a year filled with the same gentle warmth",
+            "and boundless joy that you bring to everyone around you.",
+            "May all your dreams unfold as beautifully as you have.",
+            "Happy Birthday."
+        ];
+
+        const particlesContainer = document.getElementById('particles');
+        const letterContainer = document.getElementById('letter');
+        const musicPrompt = document.getElementById('music-prompt');
+        const bgMusic = document.getElementById('bg-music');
+        const mainCard = document.getElementById('main-card');
+        const finalMsg = document.getElementById('final-msg');
+
+        // SVG templates for blue theme elements
+        const heartSVG = `<svg viewBox="0 0 32 29.6" width="100%" height="100%"><path d="M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2 c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z" fill="currentColor"/></svg>`;
+        const petalSVG = `<svg viewBox="0 0 100 100" width="100%" height="100%"><path d="M50 100 C 20 80, 10 40, 50 0 C 90 40, 80 80, 50 100 Z" fill="currentColor"/></svg>`;
+        
+        const colors = ['#3282B8', '#BBE1FA', '#0F4C75'];
+
+        // Start Auto-Sequence
+        window.onload = () => {
+            bgMusic.play().catch(e => console.log("Audio autoplay restricted. Waiting for tap."));
+            
+            // Start background particles
+            setInterval(() => createParticle(false), 800);
+            
+            // Wait for card to fade in (3s total delay based on CSS), then start typing
+            setTimeout(startTypewriter, 3500);
+        };
+
+        // Handle Audio Unlock on Tap
+        document.addEventListener('click', () => {
+            if (bgMusic.muted) {
+                bgMusic.muted = false;
+                bgMusic.volume = 0;
+                bgMusic.play();
+                
+                // Fade in audio
+                let vol = 0;
+                let fadeInterval = setInterval(() => {
+                    if (vol < 0.6) { // Max volume 60% for soft background feel
+                        vol += 0.05;
+                        bgMusic.volume = vol;
+                    } else {
+                        clearInterval(fadeInterval);
+                    }
+                }, 200);
+
+                // Hide prompt elegantly
+                musicPrompt.style.transition = 'opacity 1s ease';
+                musicPrompt.style.opacity = '0';
+                setTimeout(() => musicPrompt.remove(), 1000);
+            }
+        }, { once: true });
+
+        // Particle Generator
+        function createParticle(isBurst) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            // Randomize particle type (Heart or Petal)
+            const isHeart = Math.random() > 0.4;
+            particle.innerHTML = isHeart ? heartSVG : petalSVG;
+            
+            // Randomize styling
+            const size = Math.random() * 15 + 10; // 10px to 25px
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Semi-transparent
+            particle.style.opacity = (Math.random() * 0.5 + 0.3).toString();
+
+            // Randomize position and animation
+            particle.style.left = `${Math.random() * 100}vw`;
+            
+            if (isBurst) {
+                particle.style.bottom = '50vh';
+                particle.style.left = '50vw';
+                // Burst math (radial)
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 150 + 50;
+                const tx = Math.cos(angle) * velocity;
+                const ty = Math.sin(angle) * velocity - 200; // bias upwards
+                
+                particle.style.setProperty('--tx', `${tx}px`);
+                particle.style.setProperty('--ty', `${ty}px`);
+                particle.style.animation = `burstAnim ${Math.random() * 1.5 + 1}s cubic-bezier(0.1, 0.8, 0.3, 1) forwards`;
+            } else {
+                particle.style.animationDuration = `${Math.random() * 5 + 8}s`; // 8s to 13s
+                particle.style.animationDelay = `${Math.random() * 2}s`;
+            }
+
+            particlesContainer.appendChild(particle);
+
+            // Cleanup
+            setTimeout(() => {
+                particle.remove();
+            }, isBurst ? 2500 : 15000);
+        }
+
+        // Add dynamic burst keyframes
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes burstAnim {
+                0% { transform: translate(0, 0) scale(0.5); opacity: 1; }
+                100% { transform: translate(var(--tx), var(--ty)) scale(1.5) rotate(180deg); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+        // Typewriter Effect Logic
+        async function startTypewriter() {
+            for (let i = 0; i < letterLines.length; i++) {
+                const lineElement = document.createElement('span');
+                lineElement.className = 'line';
+                letterContainer.appendChild(lineElement);
+                
+                const cursor = document.createElement('span');
+                cursor.className = 'cursor';
+                lineElement.appendChild(cursor);
+
+                const text = letterLines[i];
+                
+                for (let j = 0; j < text.length; j++) {
+                    // Insert character before cursor
+                    lineElement.insertBefore(document.createTextNode(text.charAt(j)), cursor);
+                    
+                    // Delay per character (typing speed)
+                    // Slightly slower on punctuation for realism
+                    let speed = 60;
+                    if (['.', ',', '—'].includes(text.charAt(j))) speed = 300;
+                    
+                    await new Promise(r => setTimeout(r, speed));
+                }
+                
+                cursor.remove(); // Remove cursor when line is done
+                await new Promise(r => setTimeout(r, 600)); // Pause between lines
+            }
+
+            // Trigger final animation sequence
+            triggerFinalSequence();
+        }
+
+        // Final Animation (Burst & Glowing Text)
+        function triggerFinalSequence() {
+            setTimeout(() => {
+                // Fade out card contents smoothly
+                mainCard.style.transition = 'opacity 2s ease, filter 2s ease';
+                mainCard.style.opacity = '0.2';
+                mainCard.style.filter = 'blur(5px)';
+
+                // Particle burst
+                for(let i=0; i < 60; i++) {
+                    setTimeout(() => createParticle(true), i * 20);
+                }
+
+                // Show final glowing message
+                setTimeout(() => {
+                    finalMsg.classList.add('show');
+                }, 1000);
+
+            }, 2000); // Wait 2 seconds after text finishes
+        }
+    </script>
+</body>
+</html>
